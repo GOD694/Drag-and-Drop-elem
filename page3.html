@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop Items</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            background-color: black;
+        }
+
+        #blur {
+            position: absolute;
+            top: 15%;
+            right: 20%;
+            border-radius: 50%;
+            box-shadow: 1px 1px 11180px 10px rgba(255, 255, 255, 0.5), 
+                       1px 1px 660px 10px rgba(161, 158, 158, 0.5), 
+                       1px 1px 30px 10px rgba(161, 158, 158, 0.5);
+        }
+
+        #main {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgb(12, 12, 12);
+            border-radius: 10px;
+            box-shadow: 1px 1px 40px 1px rgb(70, 44, 70) inset;
+            background-color: #2e2e2e;
+            gap: 5rem;
+            padding: 1rem;
+            flex-wrap: wrap;
+        }
+
+        #left, #right {
+            width: 300px;
+            min-height: 300px;
+            padding: 1rem;
+            border: 1px solid wheat;
+            box-shadow: 1px 1px 5px wheat;
+            border-radius: 10px;
+            flex-grow: 0;
+            flex-shrink: 0;
+        }
+
+        .lists {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background-color: #e64141;
+            color: white;
+            cursor: grab;
+            border-radius: 5px;
+            transition: transform 0.2s;
+        }
+
+        .lists:hover {
+            transform: scale(1.02);
+        }
+
+        @media screen and (max-width: 768px) {
+            #main {
+                gap: 2rem;
+                padding: 1rem;
+                align-items: flex-start;
+                overflow-y: auto;
+            }
+
+            #left, #right {
+                width: 90%;
+                min-height: 300px;
+            }
+
+            #blur {
+                display: none;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            #left, #right {
+                width: 100%;
+                min-height: 250px;
+            }
+
+            .lists {
+                padding: 0.8rem;
+                margin-bottom: 0.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="blur"></div>
+    <div id="main">
+        <div id="left">
+             <!-- draggable alow to drag one continer to another  -->
+            <div class="lists" draggable="true">ITEM 1</div>
+            <div class="lists" draggable="true">ITEM 2</div>
+            <div class="lists" draggable="true">ITEM 3</div>
+            <div class="lists" draggable="true">ITEM 4</div>
+        </div>
+        <div id="right"></div>
+    </div>
+    <script>
+        const left = document.getElementById('left');
+        const right = document.getElementById('right');
+        const lists = document.querySelectorAll('.lists')
+        
+for ( list of lists) {
+    list.addEventListener("dragstart",(e)=>{
+let data  = e.target;
+console.log(data)
+let dataText = e.target.textContent;
+console.log(dataText)
+
+right.addEventListener('dragover',(e)=>{
+    e.preventDefault();
+})
+right.addEventListener('drop',(e)=>{
+    right.appendChild(data);
+    data = null
+})
+left.addEventListener('dragover',(e)=>{
+    e.preventDefault();
+})
+left.addEventListener('drop',(e)=>{
+    left.appendChild(data);
+    data = null
+})
+    })
+}
+        
+ </script>
+</body>
+
+</html>
